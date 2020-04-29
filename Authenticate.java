@@ -1,5 +1,4 @@
-import java.io.BufferedReader;
-import java.math.BigInteger;  
+import java.io.BufferedReader;  
 import java.nio.charset.StandardCharsets; 
 import java.security.MessageDigest;  
 import java.security.NoSuchAlgorithmException;
@@ -7,11 +6,24 @@ import java.util.*;
 import java.io.*;
 
 public class Authenticate {
-	public static String filePath = "\\Users\\alpha\\eclipse-workspace\\Authentication\\src\\userdata.csv";
+	public static String filePath = "C:\\Users\\alpha\\eclipse-workspace\\Authentication\\src\\userdata.csv";
 	
 	
 	public static Scanner read = new Scanner(System.in);
 	public static void main(String args[]) {
+		if(Arrays.asList(args).contains("help")) {
+			help();
+		} 
+		
+		if(Arrays.asList(args).contains("-m")) {
+			System.out.println(args[0]);
+			System.out.println(args[1]);
+			System.out.println(args[2]);
+			passwordCheck(args[1], args[2]);
+		}
+
+
+
 		System.out.print("\n1. Log in\n2. Quit\nChoice: ");
 		switch(read.nextInt()) {
 			case 0:
@@ -71,5 +83,11 @@ public class Authenticate {
 		}		
 		return allowed;
 
+	}
+
+	public static void help() {
+		System.out.println("Authenticate.java -m [username] [password]");
+		System.out.println("Authenticate.java with no args for interface.");
+		System.exit(0);
 	}
 }
