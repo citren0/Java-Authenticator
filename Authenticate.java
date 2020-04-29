@@ -68,15 +68,18 @@ public class Authenticate {
 		    while((row = csvReader.readLine()) != null) {
 		    	
 		    	String[] data = row.split(",");
-		    	
+				
+				String dataJoined = String.join(",", data);
+
 		    	if(stop == true) {
-		    		String fileHash = String.join(",", data);
-		    		if(fileHash.contains(hashString)) {
-		    			allowed = true;
+					String fileHash = dataJoined.substring(dataJoined.indexOf(","), dataJoined.length()+1);
+					System.out.println("DATAJOINED: " + dataJoined + "\n FILEHASH: " + fileHash);
+		    		if(fileHash.equals(hashString)) {
+		    			return allowed;
 		    		}
 		    	}
 		    	
-		    	if(String.join(",", data).substring(0, String.join(",", data).indexOf(",")).equals(username)) {
+		    	if(dataJoined.substring(0, dataJoined.indexOf(",")).equals(username)) {
 		    		stop = true;
 		    	}
 		    }
