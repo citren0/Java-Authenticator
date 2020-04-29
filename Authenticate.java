@@ -6,7 +6,7 @@ import java.util.*;
 import java.io.*;
 
 public class Authenticate {
-	public static String filePath = "C:\\Users\\alpha\\eclipse-workspace\\Authentication\\src\\userdata.csv";
+	public static String filePath = "/mnt/c/Users/alpha/eclipse-workspace/Authentication/src/Java-Authenticator/userdata.csv";
 	
 	
 	public static Scanner read = new Scanner(System.in);
@@ -16,10 +16,13 @@ public class Authenticate {
 		} 
 		
 		if(Arrays.asList(args).contains("-m")) {
-			System.out.println(args[0]);
-			System.out.println(args[1]);
-			System.out.println(args[2]);
-			passwordCheck(args[1], args[2]);
+			if(passwordCheck(args[1], args[2]) == true) {
+				System.out.println("Access Granted.");
+				System.exit(0);
+			} else {
+				System.out.println("Access Denied.");
+				System.exit(0);
+			}
 		}
 
 
@@ -73,7 +76,7 @@ public class Authenticate {
 		    		}
 		    	}
 		    	
-		    	if(String.join(",", data).contains(username)) {
+		    	if(String.join(",", data).substring(0, String.join(",", data).indexOf(",")).equals(username)) {
 		    		stop = true;
 		    	}
 		    }
