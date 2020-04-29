@@ -11,7 +11,7 @@ public class Authenticate {
 	
 	public static Scanner read = new Scanner(System.in);
 	public static void main(String args[]) {
-		if(Arrays.asList(args).contains("help")) {
+		if(Arrays.asList(args).contains("--help")) {
 			help();
 		} 
 		
