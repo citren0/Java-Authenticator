@@ -6,7 +6,8 @@ import java.util.*;
 import java.io.*;
 
 public class Authenticate {
-	public static String filePath = "/mnt/c/Users/alpha/eclipse-workspace/Authentication/src/Java-Authenticator/userdata.csv";
+	public static String filePath = "/home/user/Desktop/Nerd/Programming/java-authenticator/userdata.csv";
+	public static String dataJoined = "";
 	
 	
 	public static Scanner read = new Scanner(System.in);
@@ -42,7 +43,7 @@ public class Authenticate {
 					System.exit(0);
 				} else {
 					System.out.println("Access Denied.");
-					main(null);
+					main(args);
 				}
 		}
 		
@@ -52,42 +53,37 @@ public class Authenticate {
 		boolean allowed = false;
 		
 		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+			MessageDigest digest = MessageDigest.getInstance("SHA-256"); //Hashing segment
+			byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8)); //Converts the entered password into a sha256 hash
 			StringBuffer hexString = new StringBuffer();
 		    for (int i = 0; i < hash.length; i++) {
 		    	String hex = Integer.toHexString(0xff & hash[i]);
 		    	if(hex.length() == 1) hexString.append('0');
 		        	hexString.append(hex);
 		    }
-		    String hashString = hexString.toString();
+		    String hashString = hexString.toString(); //Converts that hex hash into a string
 		    
-		    BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
+		    BufferedReader csvReader = new BufferedReader(new FileReader(filePath)); //Opens the file reader for the csv containing the hashes
 		    String row = null;
 		    boolean stop = false;
-		    while((row = csvReader.readLine()) != null) {
-		    	
-		    	String[] data = row.split(",");
+		    while((row = csvReader.readLine()) != null) {				
+				if(!row.contains(",")) {
+					System.out.println("Row invalid, does not contain any seperators.\n" + row);
+					continue;
+				}				
 				
-				String dataJoined = String.join(",", data);
-
-		    	if(stop == true) {
-					String fileHash = dataJoined.substring(dataJoined.indexOf(","), dataJoined.length()+1);
-					System.out.println("DATAJOINED: " + dataJoined + "\n FILEHASH: " + fileHash);
+		    	if(row.substring(0, row.indexOf(",")).equals(username)) {
+					String fileHash = row.substring(row.indexOf(",")+1, row.length());
 		    		if(fileHash.equals(hashString)) {
-		    			return allowed;
+						return true;
 		    		}
-		    	}
-		    	
-		    	if(dataJoined.substring(0, dataJoined.indexOf(",")).equals(username)) {
-		    		stop = true;
 		    	}
 		    }
 		    csvReader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
-		return allowed;
+		return false;
 
 	}
 
