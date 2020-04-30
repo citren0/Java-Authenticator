@@ -15,6 +15,8 @@ the beginningline and endline parts are mostly placeholders and prevent the csv 
 
 The program can be used as follows:
 
-java Authenticator.java --help
-java Authenticator.java -m user password
-java Authenticator.java
+java Authenticate.java --help
+or
+java Authenticate.java -m user password
+or
+java Authenticate.java
