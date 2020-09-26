@@ -1,5 +1,5 @@
 # Java-Authenticator
-authentication demo using hashing on java
+authentication demo using hashing on java.
 
 Uses sha256 hashes to do basic authentication. Will print access granted or access denied based on if the password was correct.
 
